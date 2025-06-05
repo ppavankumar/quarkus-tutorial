@@ -1,0 +1,1 @@
+https://code.quarkus.io/?g=org.example&a=quarkus-tutorial&b=GRADLE&e=rest&e=rest-jackson&e=hibernate-orm-panache&e=jdbc-mysql
