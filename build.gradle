@@ -35,12 +35,20 @@ group 'org.example'
 version '1.0.0-SNAPSHOT'
 
 java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(24))
-//        vendor.set(JvmVendorSpec.ORACLE)
+//    toolchain {
+//        languageVersion.set(JavaLanguageVersion.of(24))
+////        vendor.set(JvmVendorSpec.ORACLE)
+//    }
+
+    def allowedHosts = ['DESKTOP-8T7N4E4'];
+    def hostname = InetAddress.getLocalHost().getHostName();
+    if (hostname in allowedHosts) {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    } else {
+        sourceCompatibility = JavaVersion.VERSION_24
+        targetCompatibility = JavaVersion.VERSION_24
     }
-//    sourceCompatibility = JavaVersion.VERSION_24
-//    targetCompatibility = JavaVersion.VERSION_24
 }
 
 test {
