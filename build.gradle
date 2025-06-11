@@ -26,6 +26,7 @@ dependencies {
     implementation 'net.datafaker:datafaker:2.4.3'
     implementation 'org.projectlombok:lombok:1.18.38'
     annotationProcessor 'org.projectlombok:lombok:1.18.38'
+//    implementation 'io.quarkus:quarkus-vertx-web'
 //    implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
     implementation 'org.mapstruct:mapstruct:1.5.5.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
@@ -34,14 +35,15 @@ dependencies {
 group 'org.example'
 version '1.0.0-SNAPSHOT'
 
+def allowedHosts = ['DESKTOP-8T7N4E4'];
+def hostname = InetAddress.getLocalHost().getHostName();
+
 java {
 //    toolchain {
 //        languageVersion.set(JavaLanguageVersion.of(24))
 ////        vendor.set(JvmVendorSpec.ORACLE)
 //    }
 
-    def allowedHosts = ['DESKTOP-8T7N4E4'];
-    def hostname = InetAddress.getLocalHost().getHostName();
     if (hostname in allowedHosts) {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -50,6 +52,24 @@ java {
         targetCompatibility = JavaVersion.VERSION_24
     }
 }
+
+//tasks.named("quarkusDev") {
+////    doFirst {
+//    if (hostname in allowedHosts) {
+//        systemProperty "quarkus.profile", "office"
+//    } else {
+//        systemProperty "quarkus.profile", "home"
+//    }
+////    }
+//}
+
+//task.withType(JavaExec) {
+//    if (hostname in allowedHosts) {
+//        jvmArgs = ["-Dquarkus.profile=office"]
+//    } else {
+//        jvmArgs = ["-Dquarkus.profile=home"]
+//    }
+//}
 
 test {
     systemProperty "java.util.logging.manager", "org.jboss.logmanager.LogManager"
