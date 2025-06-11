@@ -2,6 +2,11 @@ package org.example.models.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.example.models.converter.BooleanToStringConverter;
+import org.example.models.entities.id_classes.EmployeeID;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 
 /**
@@ -23,13 +28,29 @@ import lombok.Data;
  * }
  * }
  */
-@Table(name = "userz")
+
+@Table(name = "employee_tbl")
 @Entity
 @Data
-public class User {
+@IdClass(EmployeeID.class)
+public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "emp_id")
     private Long id;
 
-    public String name;
+    @Column(name = "first_name")
+    public String firstName;
+
+    @Column(name = "last_name")
+    public String lastName;
+
+    @Column
+    public String department;
+
+    @Convert(converter = BooleanToStringConverter.class)
+    public Boolean active = false;
+
+    @Column(name = "date_of_joining")
+    private LocalDateTime joinedDate;
 }
