@@ -1,34 +1,38 @@
-package org.example.controllers;
+package org.example.resources;
 
 import jakarta.inject.Inject;
-import net.datafaker.Faker;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-import org.example.models.dto.UserDTO;
-import org.example.models.entities.User;
-import org.example.models.mapper.UserMapper;
-import org.example.repositories.UserRepository;
-import org.example.service.UserService;
+import org.example.models.dto.EmployeeDTO;
+import org.example.models.payload.EmployeePayload;
+import org.example.service.EmployeeService;
+import org.jboss.resteasy.reactive.RestResponse;
 
 import java.util.List;
-import java.util.Objects;
 
 @Path("/users")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class UserResource {
+public class EmployeeResource {
     @Inject
-    private UserService userService;
+    private EmployeeService employeeService;
 
     @GET
-    public List<UserDTO> getAllUsers() {
-        return userService.listAll();
+    public RestResponse<List<EmployeeDTO>> getAllUsers() {
+        return RestResponse.ResponseBuilder.ok(
+                        employeeService.listAll()
+                )
+                .header("X-Custom-Header", "some-value")
+                .build();
     }
 
     @POST
-    public void addUser(User user) {
-        userService.save(user);
+    public RestResponse<String> addUser(EmployeePayload user) {
+        employeeService.save(user);
+        return RestResponse.ok(
+                "saved user successfully"
+        );
     }
 
     @GET
@@ -37,7 +41,7 @@ public class UserResource {
     public String seedUsers(
             @PathParam("numOfUsers") Integer numOfUsers
     ) {
-        return userService.seedUsers(numOfUsers);
+        return employeeService.seedUsers(numOfUsers);
     }
 
 //    @POST
@@ -45,9 +49,9 @@ public class UserResource {
 //    @Transactional
 //    public String seedUsers() {
 //        Faker faker = new Faker();
-//        User user;
+//        Employee user;
 //        for (int i = 0; i < 10; i++) {
-//            user = new User();
+//            user = new Employee();
 //            user.setName(faker.name().fullName());
 //            userRepository.persist(user);
 //        }

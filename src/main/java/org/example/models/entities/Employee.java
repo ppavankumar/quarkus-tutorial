@@ -35,7 +35,12 @@ import java.time.LocalDateTime;
 @IdClass(EmployeeID.class)
 public class Employee implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(
+            name = "emp_seq",
+            sequenceName = "emp_id_seq",
+            allocationSize = 1
+    )
     @Column(name = "emp_id")
     private Long id;
 

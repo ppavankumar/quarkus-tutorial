@@ -1,6 +1,6 @@
 package org.example.models.dto;
 
-public record UserDTO(
+public record EmployeeDTO(
         Long id,
         String fullName
 ) {
